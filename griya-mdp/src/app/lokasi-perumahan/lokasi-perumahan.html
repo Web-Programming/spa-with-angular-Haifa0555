@@ -2,15 +2,21 @@
   <!-- Property Image -->
   <div class="position-relative">
     <img
-      src="..."
+      [src]="housing.image"
       class="card-img-top"
-      alt="Perumahan Modern"
+      [alt]="housing.name"
       style="height: 250px; object-fit: cover"
     />
 
     <!-- Badge Status -->
-    <span class="position-absolute top-0 start-0 m-3 badge bg-success">
-      <i class="bi bi-check-circle-fill me-1"></i>Available
+    <span
+      class="position-absolute top-0 start-0 m-3 badge"
+      [ngClass]="{
+        'bg-success': housing.status === 'Available',
+        'bg-secondary': housing.status !== 'Available'
+      }"
+    >
+      <i class="bi bi-check-circle-fill me-1"></i>{{ housing.status }}
     </span>
 
     <!-- Favorite Button -->
@@ -21,28 +27,28 @@
 
   <div class="card-body">
     <!-- Property Title & Location -->
-    <h5 class="card-title fw-bold mb-2">Griya Asri Residence</h5>
+    <h5 class="card-title fw-bold mb-2">{{ housing.name }}</h5>
     <p class="text-muted mb-3">
       <i class="bi bi-geo-alt-fill text-primary me-1"></i>
-      Jakarta Selatan, Indonesia
+      {{ housing.location }}
     </p>
 
     <!-- Price -->
     <div class="mb-3">
-      <h4 class="text-primary fw-bold mb-0">Rp 850.000.000</h4>
+      <h4 class="text-primary fw-bold mb-0">{{ formatPrice(housing.price) }}</h4>
       <small class="text-muted">Harga mulai dari</small>
     </div>
 
     <!-- Property Features -->
     <div class="d-flex gap-3 mb-3 text-muted">
-      <small> <i class="bi bi-house-door me-1"></i>3 Kamar </small>
-      <small> <i class="bi bi-droplet me-1"></i>2 K. Mandi </small>
-      <small> <i class="bi bi-rulers me-1"></i>120 m² </small>
+      <small> <i class="bi bi-house-door me-1"></i>{{ housing.bedrooms }} Kamar </small>
+      <small> <i class="bi bi-droplet me-1"></i>{{ housing.bathrooms }} K. Mandi </small>
+      <small> <i class="bi bi-rulers me-1"></i>{{ housing.area }} m² </small>
     </div>
 
-    <!-- Description -->
-    <p class="card-text text-muted small mb-3">
-      Hunian modern dengan desain minimalis, dilengkapi fasilitas lengkap.
+    <!-- Description (optional) -->
+    <p class="card-text text-muted small mb-3" *ngIf="housing.description">
+      {{ housing.description }}
     </p>
 
     <!-- Action Buttons -->
@@ -57,14 +63,17 @@
   <!-- Card Footer -->
   <div class="card-footer bg-light border-0">
     <div class="d-flex justify-content-between align-items-center">
-      <small class="text-muted"> <i class="bi bi-calendar3 me-1"></i>Posted 2 days ago </small>
+      <small class="text-muted" *ngIf="housing.postedDays">
+        <i class="bi bi-calendar3 me-1"></i>Posted {{ housing.postedDays }} days ago
+      </small>
       <div class="text-warning">
-        <i class="bi bi-star-fill"></i>
-        <i class="bi bi-star-fill"></i>
-        <i class="bi bi-star-fill"></i>
-        <i class="bi bi-star-fill"></i>
-        <i class="bi bi-star-half"></i>
-        <small class="text-muted ms-1">4.5</small>
+        <!-- Full stars -->
+        <i class="bi bi-star-fill" *ngFor="let star of getStars()"></i>
+        <!-- Half star -->
+        <i class="bi bi-star-half" *ngIf="hasHalfStar()"></i>
+        <!-- Empty stars -->
+        <i class="bi bi-star" *ngFor="let star of getEmptyStars()"></i>
+        <small class="text-muted ms-1">{{ housing.rating }}</small>
       </div>
     </div>
   </div>

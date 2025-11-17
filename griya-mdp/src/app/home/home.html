@@ -52,6 +52,7 @@
     </div>
   </div>
 </section>
+<!-- Properties Section -->
 <section id="properties" class="properties-section py-5">
   <div class="container">
     <div class="row mb-4">
@@ -90,6 +91,35 @@
     </div>
   </div>
 </section>
+<!-- Filter Buttons with Event Binding -->
+<button
+  class="btn btn-outline-primary"
+  [class.active]="isFilterActive('all')"
+  (click)="filterByType('all')"
+>
+  <i class="bi bi-grid-3x3-gap me-2"></i>Semua
+</button>
+<button
+  class="btn btn-outline-primary"
+  [class.active]="isFilterActive('rumah')"
+  (click)="filterByType('rumah')"
+>
+  <i class="bi bi-house me-2"></i>Rumah
+</button>
+
+<!-- Display Filtered Results -->
+<div class="col-md-6 col-lg-4" *ngFor="let house of filteredList">
+  <app-lokasi-perumahan [housing]="house"></app-lokasi-perumahan>
+</div>
+
+<!-- No Results Message -->
+<div *ngIf="filteredList.length === 0">
+  <h5 class="text-muted">Tidak ada properti ditemukan</h5>
+</div>
+
+<!-- Results Counter -->
+<p>Menampilkan {{ filteredList.length }} dari {{ housingList.length }} properti</p>
+
 <!-- CTA Section -->
 <section class="cta-section bg-primary text-white py-5">
   <div class="container">
