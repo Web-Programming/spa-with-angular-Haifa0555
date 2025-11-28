@@ -9,7 +9,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../services/auth.service'; // ✅ Import Service
+import { AuthService } from '../services/auth';
 
 @Component({
   selector: 'app-register',
