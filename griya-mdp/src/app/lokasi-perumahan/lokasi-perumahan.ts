@@ -1,48 +1,33 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-
-export interface Housing {
-  id: number;
-  name: string;
-  location: string;
-  price: number;
-  bedrooms: number;
-  bathrooms: number;
-  area: number;
-  image: string;
-  rating: number;
-  status: string;
-  type?: string;
-  description?: string;
-  postedDays?: number;
-}
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { Housing } from './housing.model';
 
 @Component({
   selector: 'app-lokasi-perumahan',
-  imports: [CommonModule],
-  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './lokasi-perumahan.html',
-  styleUrls: ['./lokasi-perumahan.css'],
+  styleUrl: './lokasi-perumahan.css',
 })
 export class LokasiPerumahan {
   @Input() housing: Housing = {
     id: 0,
-    name: '',
-    location: '',
-    price: 0,
-    bedrooms: 0,
-    bathrooms: 0,
-    area: 0,
-    image: '',
-    rating: 0,
-    status: '',
-    type: '',
-    description: '',
-    postedDays: 0,
+    title: 'Griya Asri Residence',
+    location: 'Jakarta Selatan',
+    price: 850000000,
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 120,
+    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&h=400&fit=crop',
+    rating: 4.5,
+    status: 'Available',
+    description: 'Hunian modern dengan desain minimalis, dilengkapi fasilitas lengkap dan akses mudah ke berbagai tempat strategis.',
+    postedDays: 2
   };
 
   getStars(): number[] {
-    return Array(Math.floor(this.housing.rating)).fill(0);
+    const fullStars = Math.floor(this.housing.rating);
+    return Array(fullStars).fill(0);
   }
 
   hasHalfStar(): boolean {
@@ -61,7 +46,7 @@ export class LokasiPerumahan {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR',
-      minimumFractionDigits: 0,
+      minimumFractionDigits: 0
     }).format(price);
   }
 }
